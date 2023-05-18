@@ -50,10 +50,12 @@ function checkAnswer() {
     let isCorrect = userAnswer === calculatedAnswer[0];
     if(isCorrect){
         alert("You win!");
+        incrementScore();
     } else{
         alert("Go back to School!");
+        incrementIncorrect();
     }
-    runGame(userAnswer[1]);
+    runGame(calculatedAnswer[1]);
 }
 
 function calculateCorrectAnswer() {
@@ -62,21 +64,24 @@ function calculateCorrectAnswer() {
     let operator = document.getElementById('operator').innerText;
     let result;
     if(operator === '+'){
-        result = operand1+operand2;
+        return[ operand1+operand2,"addition"];
     } else if(operator === '-'){
-        result = operand1-operand2;
+        return[ operand1-operand2,"substract"];
     } else if(operator === 'x'){
-        result = operand1*operand2;
+        return[ operand1*operand2,"multiply"];
     }else if(operator === '/'){
-        result = operand1/operand2;
+        return[ operand1/operand2,"division"];
     }
-    
-    return [result,operator];
 
 }
 
 function incrementScore() {
-
+    let score = parseInt(document.getElementById('score').innerText);
+    document.getElementById('score').innerText = ++score;    
+}
+function incrementIncorrect() {
+    let incorrect = parseInt(document.getElementById('incorrect').innerText);
+    document.getElementById('incorrect').innerText = ++incorrect;    
 }
 
 function displayAdditionQuestion(operand1, operand2) {
@@ -86,9 +91,9 @@ function displayAdditionQuestion(operand1, operand2) {
 }
 
 function displaySubtractQuestion(operand1, operand2) {
-    document.getElementById('operand1').textContent = operand1;
-    document.getElementById('operand2').textContent = operand2;
-    document.getElementById('operator').textContent = '-';
+    document.getElementById("operand1").textContent = operand1 > operand2 ? operand1 : operand2;
+    document.getElementById("operand2").textContent = operand1 > operand2 ? operand2 : operand1;
+    document.getElementById('operator').textContent = "-";
 }
 
 function displayMultiplyQuestion(operand1, operand2) {
