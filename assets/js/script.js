@@ -16,9 +16,14 @@ document.addEventListener("DOMContentLoaded",function() {
                 let gameType = this.getAttribute("data-type");
                 runGame(gameType);
             }
-        })
+        });
     }
 
+    document.getElementById('answer-box').addEventListener('keydown', function(event){
+        if(event.key === 'Enter'){
+            checkAnswer();
+        }
+    });
     runGame("addition");
 
 })
@@ -31,6 +36,8 @@ document.addEventListener("DOMContentLoaded",function() {
 
 // 2 - Code to be executed when the user clicks a button. 
 function runGame(gameType) {
+    document.getElementById('answer-box').value = '';
+    document.getElementById('answer-box').focus();
     let num1 = Math.floor(Math.random()*25+1);
     let num2 = Math.floor(Math.random()*25+1);
     if(gameType === "addition"){
@@ -103,7 +110,11 @@ function displayMultiplyQuestion(operand1, operand2) {
 }
 
 function displayDivisionQuestion(operand1, operand2) {
-    document.getElementById('operand1').textContent = operand1;
-    document.getElementById('operand2').textContent = operand2;
+    let dividend = operand1 > operand2 ? operand1 : operand2;
+    let divisor = operand1 > operand2 ? operand2 : operand1;
+    let addDividend = Math.ceil(dividend/divisor)
+    dividend = addDividend * divisor;
+    document.getElementById('operand1').textContent = dividend;
+    document.getElementById('operand2').textContent = divisor;
     document.getElementById('operator').textContent = '/';
 }
